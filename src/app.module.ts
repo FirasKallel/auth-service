@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import * as dotenv from 'dotenv';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CatexampleModule } from './catexample/catexample.module';
 
 dotenv.config();
 
