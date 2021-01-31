@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import * as dotenv from 'dotenv';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CatexampleModule } from './catexample/catexample.module';
+import { StudentModule } from './student/student.module';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ dotenv.config();
         process.env.MONGODB_PORT,
     ),
     CatexampleModule,
+    StudentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
