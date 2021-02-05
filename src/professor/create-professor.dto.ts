@@ -5,11 +5,7 @@ import {
   Length,
 } from 'class-validator';
 
-export class CreateStudentDto {
-  @ApiProperty()
-  @IsString()
-  @Length(7)
-  numEtudiant: string;
+export class CreateProfessorDto {
   @ApiProperty()
   @IsString()
   nom: string;
@@ -25,5 +21,5 @@ export class CreateStudentDto {
   cin: string;
   @IsString()
   @ApiProperty()
-  filiere: string;
+  departement: string;
 }
