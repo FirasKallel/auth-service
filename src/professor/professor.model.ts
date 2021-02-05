@@ -38,11 +38,9 @@ export const ProfessorSchema = new mongoose.Schema({
 });
 
 export interface Professor extends mongoose.Document {
-  numEtudiant: number;
   cun: number;
   email: string;
   nom: string;
   prenom: string;
-  projectId: string;
-  filiere: string;
+  departement: string;
 }

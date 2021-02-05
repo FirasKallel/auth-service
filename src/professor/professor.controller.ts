@@ -8,8 +8,8 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('professor')
 export class ProfessorController {}
 
-@ApiTags('Students')
-@Controller('students')
+@ApiTags('professor')
+@Controller('professor')
 export class StudentController 
 {   
     constructor(private professorService: ProfessorService) {}
@@ -25,15 +25,15 @@ export class StudentController
     }    
 
     @Post()
-    async create(@Body() createProfessorDto: ProfessorService) {
-        //const newStudent = this.professorService.create(createProfessorDto);
-        //return newStudent;
+    async create(@Body() ProfessorDto: CreateProfessorDto) {
+        const newProf = this.professorService.create(ProfessorDto);
+        return newProf;
     }
 
     @Put()
     async put(@Body() professorDto: CreateProfessorDto ) {
-        const student = this.professorService.update(professorDto);
-        return student;
+        const Prof = this.professorService.update(professorDto);
+        return Prof;
     }
 
     @Delete(':cin')

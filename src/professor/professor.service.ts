@@ -10,70 +10,70 @@ import {
   
   @Injectable()
   export class ProfessorService {
-    constructor(@InjectModel('Student') private studentModel: Model<Professor>) {}
+    constructor(@InjectModel('Professor') private professorModel: Model<Professor>) {}
   
     async gets() {
       try {
-        return await this.studentModel.find({});
+        return await this.professorModel.find({});
       } catch (error) {
         throw new NotFoundException('No students found.');
       }
     }
   
     async get(cin: string) {
-      const student = await this.findStudent(cin);
+      const student = await this.find(cin);
       return student;
     }
   
     async create(createProfessorDto: CreateProfessorDto) {
-      const newStudent = new this.studentModel(createProfessorDto);
+      const newProfessor = new this.professorModel(createProfessorDto);
       try {
-        const result = await newStudent.save();
+        const result = await newProfessor.save();
       } catch (error) {
         throw new ForbiddenException('Student already exists.');
       }
-      return newStudent;
+      return newProfessor;
     }
   
     async put(cin: string, field: any) {
-      const student = await this.findStudent(cin);
+      const student = await this.find(cin);
     }
   
-    async update(StudentDto: CreateProfessorDto) {
-      const updatedStudent = await this.findStudent(StudentDto.cin);
-      if (StudentDto.email) {
-        updatedStudent.email = StudentDto.email;
+    async update(ProfDto: CreateProfessorDto) {
+      const updatedProf = await this.find(ProfDto.cin);
+      if (ProfDto.email) {
+        updatedProf.email = ProfDto.email;
       }
-      if (StudentDto.prenom) {
-        updatedStudent.prenom = StudentDto.prenom;
+      if (ProfDto.prenom) {
+        updatedProf.prenom = ProfDto.prenom;
       }
-      if (StudentDto.nom) {
-        updatedStudent.nom = StudentDto.nom;
+      if (ProfDto.nom) {
+        updatedProf.nom = ProfDto.nom;
       }
-      if (StudentDto.departement) {
-        updatedStudent.filiere = StudentDto.departement;
+      if (ProfDto.departement) {
+        updatedProf.filiere = ProfDto.departement;
       }
-      updatedStudent.save();
-      return updatedStudent;
+      updatedProf.save();
+      return updatedProf;
     }
   
     async delete(num: string) {
-      const deletedStudent = await this.findStudent(num);
-      deletedStudent.delete();
+      const deletedProf = await this.find(num);
+      deletedProf.delete();
       return num;
     }
   
-    private async findStudent(cin: string): Promise<Professor> {
-      let student;
+    private async find(cin: string): Promise<Professor> {
+      let professor;
       try {
-        student = await this.studentModel.findOne({ cin }).exec();
-        console.log(student);
+        professor = await this.professorModel.findOne({ cin }).exec();
+        console.log(professor);
       } catch (error) {
-        throw new NotFoundException('Could not find student.');
+        throw new NotFoundException('Could not find Professor.');
       }
-      if (!student) {
-        throw new NotFoundException('Could not find student.');
+      if (!professor) {
+        throw new NotFoundException('Could not find Professor.');
       }
-      return student;
+      return professor;
     }
   }
