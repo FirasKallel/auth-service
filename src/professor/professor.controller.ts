@@ -12,7 +12,7 @@ import { CreateProfessorDto } from './create-professor.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateProfessorDto } from './update-professor.dto';
 
-@ApiTags('professors')
+@ApiTags('Professors')
 @Controller('professors')
 export class ProfessorController {
   constructor(private professorService: ProfessorService) {}

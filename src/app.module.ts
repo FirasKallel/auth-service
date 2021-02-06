@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CatexampleModule } from './catexample/catexample.module';
 import { StudentModule } from './student/student.module';
 import { ProfessorModule } from './professor/professor.module';
+import { AuthModule } from './auth/auth.module';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ dotenv.config();
     CatexampleModule,
     StudentModule,
     ProfessorModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

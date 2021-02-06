@@ -8,11 +8,13 @@ import { CreateProfessorDto } from './create-professor.dto';
 import { Model } from 'mongoose';
 import { Professor } from './professor.model';
 import { UpdateProfessorDto } from './update-professor.dto';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class ProfessorService {
   constructor(
     @InjectModel('Professor') private professorModel: Model<Professor>,
+    private authService: AuthService,
   ) {}
 
   async gets() {
@@ -29,6 +31,13 @@ export class ProfessorService {
   }
 
   async create(createProfessorDto: CreateProfessorDto) {
+    const user = {
+      email: createProfessorDto.email,
+      cin: createProfessorDto.cin,
+      role: 'student',
+      password: createProfessorDto.cin,
+    };
+    await this.authService.create(user);
     const newProfessor = new this.professorModel(createProfessorDto);
     try {
       const result = await newProfessor.save();

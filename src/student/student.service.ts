@@ -8,10 +8,14 @@ import { CreateStudentDto } from './create-student.dto';
 import { Model } from 'mongoose';
 import { Student } from './student.model';
 import { UpdateStudentDto } from './update-student.dto';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class StudentService {
-  constructor(@InjectModel('Student') private studentModel: Model<Student>) {}
+  constructor(
+    @InjectModel('Student') private studentModel: Model<Student>,
+    private authService: AuthService,
+  ) {}
 
   async gets() {
     try {
@@ -27,6 +31,13 @@ export class StudentService {
   }
 
   async create(createStudentDto: CreateStudentDto) {
+    const user = {
+      email: createStudentDto.email,
+      cin: createStudentDto.cin,
+      role: 'student',
+      password: createStudentDto.cin,
+    };
+    await this.authService.create(user);
     const newStudent = new this.studentModel(createStudentDto);
     try {
       const result = await newStudent.save();
