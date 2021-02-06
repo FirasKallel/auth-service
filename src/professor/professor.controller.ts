@@ -4,15 +4,13 @@ import {
   Get,
   Param,
   Post,
-  Query,
   Put,
   Delete,
 } from '@nestjs/common';
 import { ProfessorService } from './professor.service';
-import { get } from 'https';
 import { CreateProfessorDto } from './create-professor.dto';
-import { ok } from 'assert';
 import { ApiTags } from '@nestjs/swagger';
+import { UpdateProfessorDto } from './update-professor.dto';
 
 @ApiTags('professors')
 @Controller('professors')
@@ -35,9 +33,12 @@ export class ProfessorController {
     return newProf;
   }
 
-  @Put()
-  async put(@Body() professorDto: CreateProfessorDto) {
-    const Prof = this.professorService.update(professorDto);
+  @Put(':cin')
+  async put(
+    @Param('cin') cin: string,
+    @Body() professorDto: UpdateProfessorDto,
+  ) {
+    const Prof = this.professorService.update(professorDto, cin);
     return Prof;
   }
 

@@ -7,6 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateProfessorDto } from './create-professor.dto';
 import { Model } from 'mongoose';
 import { Professor } from './professor.model';
+import { UpdateProfessorDto } from './update-professor.dto';
 
 @Injectable()
 export class ProfessorService {
@@ -41,8 +42,8 @@ export class ProfessorService {
     const student = await this.find(cin);
   }
 
-  async update(ProfDto: CreateProfessorDto) {
-    const updatedProf = await this.find(ProfDto.cin);
+  async update(ProfDto: UpdateProfessorDto, cin) {
+    const updatedProf = await this.find(cin);
     if (ProfDto.email) {
       updatedProf.email = ProfDto.email;
     }
