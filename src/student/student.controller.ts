@@ -13,12 +13,12 @@ export class StudentController
 
     @Get()
     async getStudents(){
-        return this.studentService.getStudents();
+        return this.studentService.gets();
     }
 
     @Get(':cin')
     async getStudent(@Param('cin') cin: string){
-        return this.studentService.getStudent(cin);
+        return this.studentService.get(cin);
     }    
 
     @Post()
@@ -35,7 +35,7 @@ export class StudentController
 
     @Delete(':cin')
     async deleteStudent(@Param('cin')cin: string){
-        this.studentService.deleteStudent(cin);
+        this.studentService.delete(cin);
         return cin + " deleted";
     }
 

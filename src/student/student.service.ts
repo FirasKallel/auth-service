@@ -1,87 +1,80 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateStudentDto } from './create-student.dto';
 import { Model } from 'mongoose';
-import{Student} from './student.model'
+import { Student } from './student.model';
 
 @Injectable()
 export class StudentService {
+  constructor(@InjectModel('Student') private studentModel: Model<Student>) {}
 
-    constructor(@InjectModel('Student') private studentModel: Model<Student>) {}
-
-    async getStudents() {
-        try
-        {
-            return await this.studentModel.find({});
-        }
-        catch(error){
-            throw new NotFoundException('No students found.');
-        }
+  async gets() {
+    try {
+      return await this.studentModel.find({});
+    } catch (error) {
+      throw new NotFoundException('No students found.');
     }
+  }
 
-    async getStudent(cin: string) {
-        const student = await this.findStudent(cin);
-        return student;
+  async get(cin: string) {
+    const student = await this.findStudent(cin);
+    return student;
+  }
+
+  async create(createStudentDto: CreateStudentDto) {
+    const newStudent = new this.studentModel(createStudentDto);
+    newStudent.is_Active = true;
+    try {
+      const result = await newStudent.save();
+    } catch (error) {
+      throw new ForbiddenException('Student already exists.');
     }
+    return newStudent;
+  }
 
-    async create(createStudentDto: CreateStudentDto) {
-        const newStudent= new this.studentModel(createStudentDto);
-        newStudent.is_Active=true;
-        try
-        {
-            const result = await newStudent.save();
-        }
-        catch(error) 
-        {
-            throw new ForbiddenException('Student already exists.');
-        }
-        return newStudent;
+  async put(cin: string, field: any) {
+    const student = await this.findStudent(cin);
+  }
 
-    }
-
-    async put(cin: string ,field: any){
-        const student = await this.findStudent(cin);
-
-    }
-
-    async update(StudentDto: CreateStudentDto) {
+  async update(StudentDto: CreateStudentDto) {
     const updatedStudent = await this.findStudent(StudentDto.cin);
     if (StudentDto.email) {
-        updatedStudent.email = StudentDto.email;
+      updatedStudent.email = StudentDto.email;
     }
     if (StudentDto.prenom) {
-        updatedStudent.prenom = StudentDto.prenom;
+      updatedStudent.prenom = StudentDto.prenom;
     }
     if (StudentDto.nom) {
-        updatedStudent.nom = StudentDto.nom;
+      updatedStudent.nom = StudentDto.nom;
     }
     if (StudentDto.filiere) {
-        updatedStudent.filiere = StudentDto.filiere;
+      updatedStudent.filiere = StudentDto.filiere;
     }
     updatedStudent.save();
     return updatedStudent;
+  }
+
+  async delete(num: string) {
+    const deletedStudent = await this.findStudent(num);
+    deletedStudent.delete();
+    return num;
+  }
+
+  private async findStudent(cin: string): Promise<Student> {
+    let student;
+    try {
+      student = await this.studentModel.findOne({ cin }).exec();
+      console.log(student);
+    } catch (error) {
+      throw new NotFoundException('Could not find student.');
     }
-    
-
-    async deleteStudent(num: string) {
-        const deletedStudent = await this.findStudent(num);
-        deletedStudent.delete();
-        return num;
-
+    if (!student) {
+      throw new NotFoundException('Could not find student.');
     }
-
-
-    private async findStudent(cin: string): Promise<Student> {
-        var student;
-        try {
-          student = await this.studentModel.findOne({cin}).exec();
-          console.log(student);
-        } catch (error) {
-          throw new NotFoundException('Could not find student.');
-        }
-        if (!student) {
-          throw new NotFoundException('Could not find student.');
-        }
-        return student;
-      }
+    return student;
+  }
 }

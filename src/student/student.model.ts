@@ -2,17 +2,16 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
 export const StudentSchema = new mongoose.Schema({
-
-    cin:{
-        type: String,
-        unique: true,
-        validate: {
-            validator: (value) => /^[0-9]{8}$/.test(value),
-            message: 'Invalid CIN',
-          },
+  cin: {
+    type: String,
+    unique: true,
+    validate: {
+      validator: (value) => /^[0-9]{8}$/.test(value),
+      message: 'Invalid CIN',
     },
+  },
 
-    email: {
+  email: {
     type: String,
     required: true,
     unique: true,
@@ -24,38 +23,38 @@ export const StudentSchema = new mongoose.Schema({
       },
       message: 'Email Not Valid',
     },
-    },
+  },
 
-    numEtudiant: {
+  numEtudiant: {
     type: String,
     required: true,
     validate: {
       validator: (value) => /^[0-9]{7}$/.test(value),
       message: 'Invalid Student Number',
     },
-    },
+  },
 
-    nom: {
+  nom: {
     type: String,
     required: true,
-    },
+  },
 
-    prenom: {
+  prenom: {
     type: String,
     required: true,
-    },
+  },
 
-    projectId: String,
+  projectId: String,
 
-    filiere: {
+  filiere: {
     type: String,
     enum: ['GL', 'RT', 'IMI', 'IIA', 'CH', 'BIO'],
     required: true,
-    },
+  },
 
-    is_Active:{
-        type : Boolean
-    }
+  is_Active: {
+    type: Boolean,
+  },
 });
 
 export interface Student extends mongoose.Document {
@@ -66,5 +65,5 @@ export interface Student extends mongoose.Document {
   prenom: string;
   projectId: string;
   filiere: string;
-  is_Active:boolean;
+  is_Active: boolean;
 }
