@@ -14,8 +14,8 @@ import { CreateProfessorDto } from './create-professor.dto';
 import { ok } from 'assert';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('professor')
-@Controller('professor')
+@ApiTags('professors')
+@Controller('professors')
 export class ProfessorController {
   constructor(private professorService: ProfessorService) {}
 
