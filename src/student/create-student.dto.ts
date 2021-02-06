@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, Length } from 'class-validator';
+import { IsString, IsEmail, Matches } from 'class-validator';
 
 export class CreateStudentDto {
   @ApiProperty()
   @IsString()
-  @Length(7, 7)
+  @Matches('^[0-9]{7}$')
   numEtudiant: string;
   @ApiProperty()
   @IsString()
@@ -17,7 +17,7 @@ export class CreateStudentDto {
   email: string;
   @ApiProperty()
   @IsString()
-  @Length(8, 8)
+  @Matches('^[0-9]{8}$')
   cin: string;
   @IsString()
   @ApiProperty()

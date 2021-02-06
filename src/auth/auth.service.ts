@@ -1,5 +1,7 @@
 import {
+  BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -8,7 +10,6 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
-
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
@@ -33,7 +34,11 @@ export class AuthService {
     try {
       await new_user.save();
     } catch (e) {
-      throw new ConflictException('The mail provided is already used');
+      if (e.keyValue && e.keyValue.cin == '0') {
+        throw new ForbiddenException('There is already an admin');
+      } else {
+        throw new ConflictException('The mail provided is already used');
+      }
     }
     return {
       cin: user.cin,

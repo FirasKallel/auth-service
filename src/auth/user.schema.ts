@@ -31,6 +31,10 @@ export const UserSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
+    validate: {
+      validator: (value) => /^[0-9]*$/.test(value),
+      message: 'Invalid CIN',
+    },
   },
 
   is_active: {
