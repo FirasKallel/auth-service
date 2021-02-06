@@ -1,9 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  IsEmail,
-  Length,
-} from 'class-validator';
+import { IsString, IsEmail, Length } from 'class-validator';
 
 export class CreateProfessorDto {
   @ApiProperty()

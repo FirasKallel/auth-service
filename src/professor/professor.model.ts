@@ -2,19 +2,20 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
 export const ProfessorSchema = new mongoose.Schema({
+  cin: {
+    type: Number,
+    unique: true,
+  },
 
-    cin:{
-        type: Number,
-        unique: true,
-    },
-
-    email: {
+  email: {
     type: String,
     required: true,
     unique: true,
     validate: {
       validator: function (value) {
-        return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value);
+        return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+          value,
+        );
       },
       message: 'Email Not Valid',
     },
@@ -32,7 +33,12 @@ export const ProfessorSchema = new mongoose.Schema({
 
   departement: {
     type: String,
-    enum: ['Génie Physique et Instrumentation', 'Génie Informatique et Mathématiques', 'Génie Biologique et de Chimie', 'Sciences Sociales, Langues et Formation Générale'],
+    enum: [
+      'Génie Physique et Instrumentation',
+      'Génie Informatique et Mathématiques',
+      'Génie Biologique et de Chimie',
+      'Sciences Sociales, Langues et Formation Générale',
+    ],
     required: true,
   },
 });
