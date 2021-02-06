@@ -4,7 +4,7 @@ import { IsString, IsEmail, Length } from 'class-validator';
 export class CreateStudentDto {
   @ApiProperty()
   @IsString()
-  @Length(7)
+  @Length(7, 7)
   numEtudiant: string;
   @ApiProperty()
   @IsString()
@@ -17,7 +17,7 @@ export class CreateStudentDto {
   email: string;
   @ApiProperty()
   @IsString()
-  @Length(8)
+  @Length(8, 8)
   cin: string;
   @IsString()
   @ApiProperty()

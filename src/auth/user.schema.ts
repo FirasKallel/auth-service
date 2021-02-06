@@ -28,7 +28,7 @@ export const UserSchema = new mongoose.Schema({
   },
 
   cin: {
-    type: Number,
+    type: String,
     unique: true,
     required: true,
   },

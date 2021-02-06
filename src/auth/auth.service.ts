@@ -4,7 +4,6 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserCreateDto } from './dto/user-create.dto';
 import { UserLoginDto } from './dto/user-login.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -20,7 +19,12 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async create(user: { password: string; role: string; cin: string; email: string }) {
+  async create(user: {
+    password: string;
+    role: string;
+    cin: string;
+    email: string;
+  }) {
     const new_user = new this.userModel(user);
     new_user.password = await bcrypt.hash(
       user.password,
