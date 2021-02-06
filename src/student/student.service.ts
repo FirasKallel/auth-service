@@ -31,7 +31,7 @@ export class StudentService {
     try {
       const result = await newStudent.save();
     } catch (error) {
-      throw new ForbiddenException('Student already exists.');
+      throw new ForbiddenException(error.message);
     }
     return newStudent;
   }
