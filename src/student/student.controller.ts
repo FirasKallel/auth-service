@@ -4,14 +4,13 @@ import {
   Get,
   Param,
   Post,
-  Query,
   Put,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './create-student.dto';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { UpdateStudentDto } from './update-student.dto';
 
 @ApiTags('Students')
 @Controller('students')
@@ -34,9 +33,9 @@ export class StudentController {
     return newStudent;
   }
 
-  @Put()
-  put(@Body() studentDto: CreateStudentDto) {
-    const student = this.studentService.update(studentDto);
+  @Put(':cin')
+  put(@Param('cin') cin: string, @Body() studentDto: UpdateStudentDto) {
+    const student = this.studentService.update(studentDto, cin);
     return student;
   }
 
