@@ -28,7 +28,6 @@ export class StudentService {
 
   async create(createStudentDto: CreateStudentDto) {
     const newStudent = new this.studentModel(createStudentDto);
-    newStudent.is_Active = true;
     try {
       const result = await newStudent.save();
     } catch (error) {
