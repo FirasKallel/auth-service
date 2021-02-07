@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
+import { StudentFiliereEnum } from './student-filiere.enum';
 
 export const StudentSchema = new mongoose.Schema({
   cin: {
@@ -48,7 +49,7 @@ export const StudentSchema = new mongoose.Schema({
 
   filiere: {
     type: String,
-    enum: ['GL', 'RT', 'IMI', 'IIA', 'CH', 'BIO'],
+    enum: StudentFiliereEnum,
     required: true,
   },
 
@@ -65,6 +66,6 @@ export interface Student extends mongoose.Document {
   nom: string;
   prenom: string;
   projectId: string;
-  filiere: string;
+  filiere: StudentFiliereEnum;
   is_active: boolean;
 }

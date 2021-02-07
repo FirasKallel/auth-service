@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsEmail, IsOptional } from 'class-validator';
+import { StudentFiliereEnum } from './student-filiere.enum';
 
 export class UpdateStudentDto {
   @IsOptional()
@@ -15,7 +16,6 @@ export class UpdateStudentDto {
   @IsEmail()
   email: string;
   @IsOptional()
-  @IsString()
   @ApiProperty()
-  filiere: string;
+  filiere: StudentFiliereEnum;
 }
