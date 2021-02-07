@@ -21,6 +21,7 @@ import { MailingModule } from './mailing/mailing.module';
 import { APP_GUARD } from "@nestjs/core";
 import { RolesGuard } from "./authentication/guards/roles.guard";
 
+import { CsvModule } from 'nest-csv-parser';
 dotenv.config();
 @Module({
   imports: [

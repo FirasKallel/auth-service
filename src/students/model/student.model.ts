@@ -1,17 +1,6 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { StudentFiliereEnum } from './student-filiere.enum';
 
 export const StudentSchema = new mongoose.Schema({
-  cin: {
-    type: String,
-    unique: true,
-    validate: {
-      validator: (value) => /^[0-9]{8}$/.test(value),
-      message: 'Invalid CIN',
-    },
-  },
-
   email: {
     type: String,
     required: true,
@@ -25,47 +14,50 @@ export const StudentSchema = new mongoose.Schema({
       message: 'Email Not Valid',
     },
   },
-
-  numEtudiant: {
+  nce: {
     type: String,
     required: true,
+    unique: true,
     validate: {
-      validator: (value) => /^[0-9]{7}$/.test(value),
+      validator: (value) => /^[0-9]*$/.test(value),
       message: 'Invalid Student Number',
     },
   },
-
-  nom: {
+  cin: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: (value) => /^[0-9]*$/.test(value),
+      message: 'Invalid Student Number',
+    },
+  },
+  name: {
     type: String,
     required: true,
   },
-
-  prenom: {
+  lastName: {
     type: String,
     required: true,
   },
-
-  projectId: String,
-
-  filiere: {
+  field: {
     type: String,
-    enum: StudentFiliereEnum,
+    enum: ['GL', 'RT', 'IMI', 'IIA', 'CH', 'BIO'],
     required: true,
   },
-
-  is_active: {
-    type: Boolean,
-    default: true,
+  level: {
+    type: String,
+    enum: ['CYCLE', 'MASTER', 'LICENCE'],
+    required: true,
   },
 });
 
 export interface Student extends mongoose.Document {
-  numEtudiant: string;
-  cin: string;
   email: string;
-  nom: string;
-  prenom: string;
-  projectId: string;
-  filiere: StudentFiliereEnum;
-  is_active: boolean;
+  nce: string;
+  cin: string;
+  name: string;
+  lastName: string;
+  field: string;
+  level: string;
 }

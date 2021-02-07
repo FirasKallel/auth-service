@@ -1,8 +1,8 @@
-export enum StudentFiliereEnum {
+export enum Fields{
   GL = 'GL',
+  IMI = 'IMI',
   RT = 'RT',
   IIA = 'IIA',
-  IMI = 'IMI',
   CH = 'CH',
   BIO = 'BIO',
 }
