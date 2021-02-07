@@ -41,6 +41,11 @@ export const ProfessorSchema = new mongoose.Schema({
     ],
     required: true,
   },
+
+  is_active: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export interface Professor extends mongoose.Document {
@@ -49,4 +54,5 @@ export interface Professor extends mongoose.Document {
   nom: string;
   prenom: string;
   departement: string;
+  is_active: boolean;
 }

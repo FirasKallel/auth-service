@@ -51,6 +51,11 @@ export const StudentSchema = new mongoose.Schema({
     enum: ['GL', 'RT', 'IMI', 'IIA', 'CH', 'BIO'],
     required: true,
   },
+
+  is_active: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export interface Student extends mongoose.Document {
@@ -61,4 +66,5 @@ export interface Student extends mongoose.Document {
   prenom: string;
   projectId: string;
   filiere: string;
+  is_active: boolean;
 }
