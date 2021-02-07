@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
+import { ProfessorDepartmentEnum } from './professor-department.enum';
 
 export const ProfessorSchema = new mongoose.Schema({
   cin: {
@@ -33,12 +34,7 @@ export const ProfessorSchema = new mongoose.Schema({
 
   departement: {
     type: String,
-    enum: [
-      'Génie Physique et Instrumentation',
-      'Génie Informatique et Mathématiques',
-      'Génie Biologique et de Chimie',
-      'Sciences Sociales, Langues et Formation Générale',
-    ],
+    enum: ProfessorDepartmentEnum,
     required: true,
   },
 
@@ -53,6 +49,6 @@ export interface Professor extends mongoose.Document {
   email: string;
   nom: string;
   prenom: string;
-  departement: string;
+  departement: ProfessorDepartmentEnum;
   is_active: boolean;
 }
