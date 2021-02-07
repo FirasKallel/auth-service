@@ -12,15 +12,13 @@ dotenv.config();
         transport: {
           host: process.env.SMTP_HOST,
           port: process.env.SMTP_PORT,
-          ignoreTLS: true,
-          secure: false,
           auth: {
             user: process.env.SMTP_AUTH_USER,
             pass: process.env.SMTP_AUTH_PASSWORD,
           },
         },
         defaults: {
-          from: 'No-Reply <devure@insat.com>',
+          from: 'No-Reply <gestion-pfe@insat.com>',
         },
       }),
     }),
