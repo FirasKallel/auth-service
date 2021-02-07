@@ -19,6 +19,9 @@ dotenv.config();
     }),
     JwtModule.register({
       secret: process.env['JWT-SECRET-KEY'],
+      signOptions: {
+        expiresIn: 60 * 60 * 24, //One day
+      },
     }),
     UsersModule,
     AcademicYearModule,
