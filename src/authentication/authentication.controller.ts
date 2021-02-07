@@ -22,7 +22,7 @@ export class AuthenticationController {
     return this.authenticationService.login(loginCredentials);
   }
 
-  @Post('/new')
+  @Post()
   @Public()
   @ApiOperation({ description: 'Temporary endpoint for adding new users' })
   @ApiResponse({ status: 201, description: 'User added successfully.' })

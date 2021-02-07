@@ -7,7 +7,7 @@ import { Roles } from "../decorators/roles.decorator";
 import { Role } from "../users/model/role.enum";
 import { Public } from "../decorators/public.decorator";
 
-@Controller('academic-year')
+@Controller('academic_year')
 @ApiTags('Academic Year')
 export class AcademicYearController {
   constructor(private academicYearService: AcademicYearService) {}
