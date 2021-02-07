@@ -95,4 +95,17 @@ export class ProfessorsController {
   async deleteProfessor(@Param('id') professorId: string) {
     await this.professorsService.deleteProfessor(professorId);
   }
+
+  @Get('/email/:email')
+  // @Roles(Role.ADMIN, Role.STUDENT)
+  @Public()
+  @ApiOperation({ description: 'Getting a professor.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Professor successfully retrieved.',
+  })
+  @ApiResponse({ status: 404, description: 'Professor not found.' })
+  async getProfessorByEmail(@Param('email') email: string): Promise<Professor> {
+    return await this.professorsService.getProfessorByEmail(email);
+  }
 }

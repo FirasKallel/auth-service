@@ -1,28 +1,36 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { NewStudentDto } from './model/dto/new-student.dto';
 import { Student } from './model/student.model';
 import { UpdatedStudentDto } from './model/dto/updated-student.dto';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '../decorators/user.decorator';
+import { Public } from '../decorators/public.decorator';
 import { Roles } from '../decorators/roles.decorator';
 import { Role } from '../users/model/role.enum';
-import { User } from '../decorators/user.decorator';
-import { Public } from "../decorators/public.decorator";
 
 @ApiTags('Students')
 @Controller('students')
 export class StudentsController {
   constructor(private studentsService: StudentsService) {}
 
-  @Get('profile')
+  // @Get('profile')
   // @Roles(Role.STUDENT)
-  @Public()
-  @ApiOperation({ description: 'Retrieving a student.' })
-  @ApiResponse({ status: 200, description: 'Student successfully retrieved.' })
-  @ApiResponse({ status: 404, description: 'Student not found.' })
-  async getStudentProfile(@User() student): Promise<Student> {
-    return await this.studentsService.getStudentByEmail(student.email);
-  }
+  // @Public()
+  // @ApiOperation({ description: 'Retrieving a student.' })
+  // @ApiResponse({ status: 200, description: 'Student successfully retrieved.' })
+  // @ApiResponse({ status: 404, description: 'Student not found.' })
+  // async getStudentProfile(@User() student): Promise<Student> {
+  //   return await this.studentsService.getStudentByEmail(student.email);
+  // }
 
   @Get(':id')
   // @Roles(Role.ADMIN)
@@ -30,7 +38,10 @@ export class StudentsController {
   @ApiOperation({ description: 'Retrieving a student.' })
   @ApiResponse({ status: 200, description: 'Student successfully retrieved.' })
   @ApiResponse({ status: 404, description: 'Student not found.' })
-  async getStudent(@Param('id') studentId: string, @User() user): Promise<Student> {
+  async getStudent(
+    @Param('id') studentId: string,
+    @User() user,
+  ): Promise<Student> {
     return await this.studentsService.getStudentById(studentId);
   }
 
@@ -64,5 +75,18 @@ export class StudentsController {
     @Body() updates: UpdatedStudentDto,
   ): Promise<Student> {
     return await this.studentsService.updateStudent(studentId, updates);
+  }
+
+  @Get('/email/:email')
+  // @Roles(Role.ADMIN)
+  @Public()
+  @ApiOperation({ description: 'Retrieving a student.' })
+  @ApiResponse({ status: 200, description: 'Student successfully retrieved.' })
+  @ApiResponse({ status: 404, description: 'Student not found.' })
+  async getStudentByMail(
+    @Param('email') email: string,
+    @User() user,
+  ): Promise<Student> {
+    return await this.studentsService.getStudentByEmail(email);
   }
 }
