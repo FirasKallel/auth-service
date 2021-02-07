@@ -99,9 +99,9 @@ export class AuthService {
     user.is_active = false;
     await user.save();
     if (user.role == UserRoleEnum.STUDENT) {
-      await this.studentService.activate(cin);
+      await this.studentService.deactivate(cin);
     } else if (user.role == UserRoleEnum.PROFESSOR) {
-      await this.professorService.activate(cin);
+      await this.professorService.deactivate(cin);
     }
     return user;
   }
