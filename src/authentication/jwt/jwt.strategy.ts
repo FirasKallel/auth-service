@@ -4,7 +4,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Payload } from './payload.interface';
 import { UsersService } from '../../users/users.service';
 import * as dotenv from 'dotenv';
-import { AcademicYearService } from '../../academic-year/academic-year.service';
 
 dotenv.config();
 @Injectable()

@@ -18,11 +18,9 @@ import * as dotenv from 'dotenv';
 import { AcademicYearModule } from './academic-year/academic-year.module';
 import { EnterprisesModule } from './enterprises/enterprises.module';
 import { MailingModule } from './mailing/mailing.module';
-import { APP_GUARD } from "@nestjs/core";
-import { RolesGuard } from "./authentication/guards/roles.guard";
 
-import { CsvModule } from 'nest-csv-parser';
 dotenv.config();
+
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.DATABASE_URI_DEV),

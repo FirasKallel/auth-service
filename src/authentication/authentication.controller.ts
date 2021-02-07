@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { UserLoginDto } from '../users/model/dto/userLogin.dto';
 import { NewUserDto } from '../users/model/dto/newUser.dto';
@@ -14,7 +14,10 @@ export class AuthenticationController {
   @Public()
   @ApiOperation({ description: 'Login endpoint' })
   @ApiResponse({ status: 201, description: 'Successful login.' })
-  @ApiResponse({ status: 404, description: 'User not found or wrong password.'})
+  @ApiResponse({
+    status: 404,
+    description: 'User not found or wrong password.',
+  })
   async login(@Body() loginCredentials: UserLoginDto) {
     return this.authenticationService.login(loginCredentials);
   }

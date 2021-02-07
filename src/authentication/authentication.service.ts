@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { NewUserDto } from '../users/model/dto/newUser.dto';
 import { User } from '../users/model/user.model';
 import { UsersService } from '../users/users.service';
-import { AcademicYearService } from "../academic-year/academic-year.service";
+import { AcademicYearService } from '../academic-year/academic-year.service';
 
 @Injectable()
 export class AuthenticationService {
