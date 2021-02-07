@@ -46,7 +46,7 @@ export class AuthService {
       if (e.keyValue && e.keyValue.cin == '0') {
         throw new ForbiddenException('There is already an admin');
       } else {
-        throw new ConflictException('The mail provided is already used');
+        throw new ConflictException(e.message);
       }
     }
     return {
