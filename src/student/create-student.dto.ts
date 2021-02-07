@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, Matches, IsNotEmpty } from 'class-validator';
+import { IsString, IsEmail, Matches, IsNotEmpty, IsEnum } from 'class-validator';
 import { StudentFiliereEnum } from './student-filiere.enum';
 
 export class CreateStudentDto {
@@ -26,5 +26,6 @@ export class CreateStudentDto {
   cin: string;
   @IsNotEmpty()
   @ApiProperty()
+  @IsEnum(StudentFiliereEnum)
   filiere: StudentFiliereEnum;
 }

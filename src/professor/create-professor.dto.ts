@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, Length, IsNotEmpty } from 'class-validator';
+import { IsString, IsEmail, Length, IsNotEmpty, IsEnum } from 'class-validator';
 import { ProfessorDepartmentEnum } from './professor-department.enum';
 
 export class CreateProfessorDto {
@@ -22,5 +22,6 @@ export class CreateProfessorDto {
   cin: string;
   @IsNotEmpty()
   @ApiProperty()
+  @IsEnum(ProfessorDepartmentEnum)
   departement: ProfessorDepartmentEnum;
 }
