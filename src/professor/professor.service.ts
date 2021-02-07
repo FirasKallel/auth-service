@@ -1,7 +1,7 @@
 import {
   Injectable,
   NotFoundException,
-  ForbiddenException,
+  ForbiddenException, Inject, forwardRef,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateProfessorDto } from './create-professor.dto';
@@ -14,6 +14,7 @@ import { AuthService } from '../auth/auth.service';
 export class ProfessorService {
   constructor(
     @InjectModel('Professor') private professorModel: Model<Professor>,
+    @Inject(forwardRef(() => AuthService))
     private authService: AuthService,
   ) {}
 
@@ -86,6 +87,20 @@ export class ProfessorService {
     if (!professor) {
       throw new NotFoundException('Could not find Professor.');
     }
+    return professor;
+  }
+
+  async activate(cin: string) {
+    const professor = await this.professorModel.findOne({ cin });
+    professor.is_active = true;
+    await professor.save();
+    return professor;
+  }
+
+  async deactivate(cin: string) {
+    const professor = await this.professorModel.findOne({ cin });
+    professor.is_active = false;
+    await professor.save();
     return professor;
   }
 }

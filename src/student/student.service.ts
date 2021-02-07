@@ -2,6 +2,8 @@ import {
   Injectable,
   NotFoundException,
   ForbiddenException,
+  Inject,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateStudentDto } from './create-student.dto';
@@ -14,6 +16,7 @@ import { AuthService } from '../auth/auth.service';
 export class StudentService {
   constructor(
     @InjectModel('Student') private studentModel: Model<Student>,
+    @Inject(forwardRef(() => AuthService))
     private authService: AuthService,
   ) {}
 
@@ -65,7 +68,7 @@ export class StudentService {
     if (StudentDto.filiere) {
       updatedStudent.filiere = StudentDto.filiere;
     }
-    updatedStudent.save();
+    await updatedStudent.save();
     return updatedStudent;
   }
 
@@ -86,6 +89,20 @@ export class StudentService {
     if (!student) {
       throw new NotFoundException('Could not find student.');
     }
+    return student;
+  }
+
+  async activate(cin: string) {
+    const student = await this.studentModel.findOne({ cin });
+    student.is_active = true;
+    await student.save();
+    return student;
+  }
+
+  async deactivate(cin: string) {
+    const student = await this.studentModel.findOne({ cin });
+    student.is_active = false;
+    await student.save();
     return student;
   }
 }

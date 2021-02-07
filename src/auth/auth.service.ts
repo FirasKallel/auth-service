@@ -2,6 +2,8 @@ import {
   BadRequestException,
   ConflictException,
   ForbiddenException,
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -12,12 +14,19 @@ import { Model } from 'mongoose';
 import { User } from './user.schema';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { StudentService } from '../student/student.service';
+import { ProfessorService } from '../professor/professor.service';
+import { UserRoleEnum } from './user-role.enum';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel('User') private userModel: Model<User>,
     private jwtService: JwtService,
+    @Inject(forwardRef(() => StudentService))
+    private studentService: StudentService,
+    @Inject(forwardRef(() => ProfessorService))
+    private professorService: ProfessorService,
   ) {}
 
   async create(user: {
@@ -71,5 +80,29 @@ export class AuthService {
     } else {
       throw new UnauthorizedException('Invalid password');
     }
+  }
+
+  async activate(cin: string) {
+    const user = await this.userModel.findOne({ cin });
+    user.is_active = true;
+    await user.save();
+    if (user.role == UserRoleEnum.STUDENT) {
+      await this.studentService.activate(cin);
+    } else if (user.role == UserRoleEnum.PROFESSOR) {
+      await this.professorService.activate(cin);
+    }
+    return user;
+  }
+
+  async deactivate(cin: string) {
+    const user = await this.userModel.findOne({ cin });
+    user.is_active = false;
+    await user.save();
+    if (user.role == UserRoleEnum.STUDENT) {
+      await this.studentService.activate(cin);
+    } else if (user.role == UserRoleEnum.PROFESSOR) {
+      await this.professorService.activate(cin);
+    }
+    return user;
   }
 }
