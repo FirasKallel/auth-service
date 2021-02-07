@@ -33,7 +33,7 @@ export const ProfessorSchema = new mongoose.Schema({
   },
   department: {
     type: String,
-    enum: ['GPI', 'GMI', 'GBC'],
+    enum: ['GPI', 'GMI', 'GBC', 'SSLFG'],
     required: true,
   },
   rank: {
